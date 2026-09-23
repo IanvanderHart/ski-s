@@ -1,0 +1,35 @@
+# .NET
+bin/
+obj/
+*.user
+
+# Node
+node_modules/
+dist/
+
+# Environment
+.env
+appsettings.Production.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Секреты
+appsettings.json
+appsettings.*.json
+!appsettings.example.json
+
+# Build artifacts
+SkiApi/wwwroot/
+frontend/dist/
+frontend/node_modules/
+
+# Backup files
+*.save
+*.bak
