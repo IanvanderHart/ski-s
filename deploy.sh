@@ -38,7 +38,9 @@ npm run build --silent
 echo "      OK: статика собрана"
 
 echo ""
+
 echo "[4/7] Копируем статику в publish..."
+rm -rf "$PUBLISH_DIR/wwwroot"
 mkdir -p "$PUBLISH_DIR/wwwroot"
 cp -r "$REPO_DIR/frontend/dist/"* "$PUBLISH_DIR/wwwroot/"
 echo "      OK: wwwroot готов"
