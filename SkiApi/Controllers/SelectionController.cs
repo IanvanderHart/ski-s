@@ -214,7 +214,25 @@ else
                                    string snowType, string trackType)
     {
         int score = 0;
+// Если и эпюра, и штайншлифт далеко вне диапазона — лыжа не подходит
+bool profileBad = true;
+bool grindBad = true;
 
+if (ski.ProfileTempMin.HasValue && ski.ProfileTempMax.HasValue)
+{
+    double pMin = Math.Min(ski.ProfileTempMin.Value, ski.ProfileTempMax.Value);
+    double pMax = Math.Max(ski.ProfileTempMin.Value, ski.ProfileTempMax.Value);
+    if (airTemp >= pMin - 5 && airTemp <= pMax + 5) profileBad = false;
+}
+
+if (ski.StoneGrind?.TempMin != null && ski.StoneGrind?.TempMax != null)
+{
+    double sMin = Math.Min(ski.StoneGrind.TempMin.Value, ski.StoneGrind.TempMax.Value);
+    double sMax = Math.Max(ski.StoneGrind.TempMin.Value, ski.StoneGrind.TempMax.Value);
+    if (airTemp >= sMin - 5 && airTemp <= sMax + 5) grindBad = false;
+}
+
+if (profileBad && grindBad) return 0;   // лыжа не подходит вообще
         // 1. Эпюра (профиль) — температурный диапазон
         if (ski.ProfileTempMin.HasValue && ski.ProfileTempMax.HasValue)
         {
@@ -259,8 +277,9 @@ else
 
             var snowTypes = (sg.SnowTypes ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries)
                                                 .Select(s => s.Trim()).ToList();
-            if (snowTypes.Contains("All") || snowTypes.Contains(snowType)) score += 20;
-            else score -= 15;
+if (snowTypes.Contains("All")) score += 5;//«все типы» — слабый +
+else if (snowTypes.Contains(snowType)) score += 20;// точное попадание — сильный +
+            else score +=15;
 
             if (sg.TrackType == "All" || sg.TrackType == trackType) score += 15;
             else score -= 10;
