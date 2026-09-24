@@ -816,9 +816,12 @@ function Results({ data }) {
           <div><b>Трасса:</b> {input.trackType}</div>
           <div><b>Стиль:</b> {input.style === 'Classic' ? 'Классика' : 'Конёк'}</div>
         </div>
-        <div className="selection-id">ID подбора: <b>{data.selectionId}</b></div>
-      {data.skis?.length > 0 && (
-      {(!data.skis || data.skis.length === 0) &&
+
+
+  <div className="selection-id">ID подбора: <b>{data.selectionId}</b></div>
+</div>
+
+{(!data.skis || data.skis.length === 0) &&
  (!data.glideBase || data.glideBase.length === 0) &&
  (!data.glideFinish || data.glideFinish.length === 0) &&
  (!data.grip || data.grip.length === 0) && (
@@ -833,7 +836,10 @@ function Results({ data }) {
     </p>
   </div>
 )}
-</div>
+
+{data.skis?.length > 0 && (
+
+
         <div className="card">
           <h2>🎿 Лыжи ({data.skiCount})</h2>
           {data.skis.map((s) => (
