@@ -817,8 +817,6 @@ function Results({ data }) {
           <div><b>Стиль:</b> {input.style === 'Classic' ? 'Классика' : 'Конёк'}</div>
         </div>
         <div className="selection-id">ID подбора: <b>{data.selectionId}</b></div>
-      </div>
-
       {data.skis?.length > 0 && (
       {(!data.skis || data.skis.length === 0) &&
  (!data.glideBase || data.glideBase.length === 0) &&
@@ -835,6 +833,7 @@ function Results({ data }) {
     </p>
   </div>
 )}
+</div>
         <div className="card">
           <h2>🎿 Лыжи ({data.skiCount})</h2>
           {data.skis.map((s) => (
