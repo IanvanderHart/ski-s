@@ -177,13 +177,16 @@ select:focus, input:focus {
   font-size: 13px;
   color: #4a6a85;
 }
+
 .skin-badge {
-  background: #e8f0fe;
-  padding: 2px 8px;
-  border-radius: 6px;
-  color: #1a4f7a;
-  font-weight: 500;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: #4a8bc2;
+  font-weight: 600;
+  font-size: 12px;
 }
+
 .ski-grind {
   margin-top: 8px;
   font-size: 13px;
@@ -304,12 +307,18 @@ select:focus, input:focus {
 
 .ski-style {
   font-size: 12px;
-  font-weight: 600;
-  color: #4a6a85;
-  background: #e0eefa;
-  padding: 3px 10px;
-  border-radius: 20px;
+  font-weight: 500;
+  color: #7a8ea3;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
+.ski-style::before {
+  content: "•";
+  margin-right: 4px;
+  color: #b0c4d8;
+}
+
 .arsenal-actions {
   display: flex;
   gap: 8px;
@@ -441,6 +450,12 @@ select:focus, input:focus {
 }
 .btn-delete-ski:hover { background: #f5c6c6; }
 
+.geo-hint {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: #7a8ea3;
+  line-height: 1.4;
+}
 
 .wax-temp { color: #4a6a85; font-size: 13px; }
 .wax-notes { font-size: 12px; color: #6a8199; margin-top: 4px; }
@@ -450,3 +465,11 @@ select:focus, input:focus {
 .notes-card ul { margin: 0; padding-left: 20px; font-size: 13px; color: #6a5a3a; }
 .notes-card li { margin-bottom: 5px; }
 
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  background: #ffffff;
+  color: #1a2a3a;
+}

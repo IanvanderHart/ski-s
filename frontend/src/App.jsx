@@ -5,6 +5,16 @@ import './App.css';
 const API_URL = 'http://213.165.61.19:8087/api/Selection';
 const SKIS_URL = 'http://213.165.61.19:8087/api/Skis';
 const GRINDS_URL = 'http://213.165.61.19:8087/api/StoneGrinds';
+const CATEGORY_RU = {
+  'Glide': 'Скольжение',
+  'Powder': 'Порошок',
+  'Grip': 'Держание'
+};
+const TYPE_RU = {
+  'Base': 'Основа',
+  'Finish': 'Финиш',
+  'Universal': 'Универсальная'
+};
 
 function App() {
   const [activeTab, setActiveTab] = useState('selection');
@@ -379,18 +389,21 @@ const saveSki = async () => {
               </select>
             </div>
 
-            <div className="geo-block">
-              <button type="button" onClick={getLocation}>📍 Моё местоположение</button>
-              {form.latitude && (
-                <button type="button" className="clear" onClick={clearLocation}>
-                  ✕ Убрать координаты
-                </button>
-              )}
-              {geoStatus && <div className="geo-status">{geoStatus}</div>}
-            </div>
+<div className="geo-block">
+  <button type="button" onClick={getLocation}>📍 Моё местоположение</button>
+  {form.latitude && (
+    <button type="button" className="clear" onClick={clearLocation}>
+      ✕ Убрать координаты
+    </button>
+  )}
+  <p className="geo-hint">
+    Нажмите — и мы определим погоду для вашего места.
+  </p>
+  {geoStatus && <div className="geo-status">{geoStatus}</div>}
+</div>
 
             <p className="hint">
-              Если координаты заданы — погода подтянется автоматически (Open-Meteo).
+              Если координаты заданы — погода подтянется автоматически.
               Иначе введи вручную:
             </p>
 
@@ -545,13 +558,14 @@ const saveSki = async () => {
         </span>
       </div>
     </div>
-    
-        <div className="ski-details">
-          <span>Категория: {w.category}</span>
-          <span>Тип: {w.type}</span>
-          <span>Снег: {w.snowType}</span>
-          <span>Трасса: {w.trackType}</span>
-        </div>
+
+<div className="ski-details">
+  <span>Категория: {CATEGORY_RU[w.category] || w.category}</span>
+  <span>Тип: {TYPE_RU[w.type] || w.type}</span>
+  <span>Снег: {w.snowType}</span>
+  <span>Трасса: {w.trackType}</span>
+</div>
+  
         {w.notes && <div className="wax-notes">{w.notes}</div>}
         {w.warnings && <div className="wax-warn">⚠️ {w.warnings}</div>}
       </div>
@@ -785,7 +799,14 @@ function Results({ data }) {
       <div className="card info">
         <h2>Результат подбора</h2>
         <div className="info-grid">
-          <div><b>Источник погоды:</b> {data.weatherSource}</div>
+         
+         <div>
+  <b>Источник погоды:</b>{' '}
+  {data.weatherSource === 'open-meteo'
+    ? 'авто (Open-Meteo)'
+    : 'введено вручную'}
+</div>
+          
           <div><b>Температура:</b> {input.airTemp}°C</div>
           <div><b>Влажность:</b> {input.humidity}%</div>
           <div><b>Эфф. влажность:</b> {input.effectiveHumidity}%</div>
@@ -799,6 +820,21 @@ function Results({ data }) {
       </div>
 
       {data.skis?.length > 0 && (
+      {(!data.skis || data.skis.length === 0) &&
+ (!data.glideBase || data.glideBase.length === 0) &&
+ (!data.glideFinish || data.glideFinish.length === 0) &&
+ (!data.grip || data.grip.length === 0) && (
+  <div className="card warning-card">
+    <h2>⚠️ Ничего не найдено</h2>
+    <p>
+      По вашим условиям не подходит ни одна мазь и ни одна пара лыж.
+      Попробуйте изменить погоду, тип снега или стиль.
+    </p>
+    <p className="warning-hint">
+      Если считаете, что это ошибка — расскажите нам в отзыве ниже.
+    </p>
+  </div>
+)}
         <div className="card">
           <h2>🎿 Лыжи ({data.skiCount})</h2>
           {data.skis.map((s) => (
