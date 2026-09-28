@@ -412,7 +412,7 @@ const saveSki = async () => {
                 name="airTemp"
                 type="text"
                 inputMode="decimal"
-                placeholder="Температура °C"
+                placeholder="Температура °C, напр. -5"
                 value={form.airTemp}
                 onChange={handleChange}
               />
@@ -420,7 +420,7 @@ const saveSki = async () => {
                 name="humidity"
                 type="text"
                 inputMode="decimal"
-                placeholder="Влажность %"
+                placeholder="Влажность %, напр. 75"
                 value={form.humidity}
                 onChange={handleChange}
               />
@@ -428,7 +428,7 @@ const saveSki = async () => {
                 name="windSpeed"
                 type="text"
                 inputMode="decimal"
-                placeholder="Ветер м/с"
+                placeholder="Ветер м/с, напр. 2"
                 value={form.windSpeed}
                 onChange={handleChange}
               />
@@ -501,7 +501,7 @@ const saveSki = async () => {
                 <span>Эпюра: {s.profile}</span>
                 {s.stiffnessValue && <span>Жёсткость: {s.stiffnessValue} ({s.stiffnessLabel})</span>}
                 {s.camberHeightMm && <span>HBW: {s.camberHeightMm} мм</span>}
-                {s.hasSkin && <span className="skin-badge">🧷 Камус</span>}
+                {s.hasSkin && <span className="skin-badge">Камус-no wax</span>}
               </div>
 
 
@@ -583,12 +583,12 @@ const saveSki = async () => {
             <div className="modal-grid">
               <div className="field">
                 <label>Бренд *</label>
-                <input name="brand" value={skiForm.brand} onChange={handleSkiFormChange} placeholder="Fischer" />
+                <input name="brand" value={skiForm.brand} onChange={handleSkiFormChange} placeholder="напр. Fischer" />
               </div>
 
               <div className="field">
                 <label>Модель *</label>
-                <input name="model" value={skiForm.model} onChange={handleSkiFormChange} placeholder="Speedmax 3D" />
+                <input name="model" value={skiForm.model} onChange={handleSkiFormChange} placeholder="напр. Speedmax 3D" />
               </div>
 
               <div className="field">
@@ -606,37 +606,37 @@ const saveSki = async () => {
 
               <div className="field">
                 <label>Ростовка (см)</label>
-                <input name="length" type="number" value={skiForm.length} onChange={handleSkiFormChange} placeholder="192" />
+                <input name="length" type="number" value={skiForm.length} onChange={handleSkiFormChange} placeholder="напр. 192" />
               </div>
 
               <div className="field">
                 <label>Эпюра</label>
-                <input name="profile" value={skiForm.profile} onChange={handleSkiFormChange} placeholder="s2, cold, blue" />
+                <input name="profile" value={skiForm.profile} onChange={handleSkiFormChange} placeholder="напр. 2, cold, blue" />
               </div>
 
               <div className="field">
                 <label>Эпюра t° min</label>
-                <input name="profileTempMin" type="number" step="0.1" value={skiForm.profileTempMin} onChange={handleSkiFormChange} placeholder="-15" />
+                <input name="profileTempMin" type="number" step="0.1" value={skiForm.profileTempMin} onChange={handleSkiFormChange} placeholder="напр. -15" />
               </div>
 
               <div className="field">
                 <label>Эпюра t° max</label>
-                <input name="profileTempMax" type="number" step="0.1" value={skiForm.profileTempMax} onChange={handleSkiFormChange} placeholder="-5" />
+                <input name="profileTempMax" type="number" step="0.1" value={skiForm.profileTempMax} onChange={handleSkiFormChange} placeholder="напр. -5" />
               </div>
 
               <div className="field">
                 <label>Жёсткость</label>
-                <input name="stiffnessValue" type="number" step="0.1" value={skiForm.stiffnessValue} onChange={handleSkiFormChange} placeholder="100" />
+                <input name="stiffnessValue" type="number" step="0.1" value={skiForm.stiffnessValue} onChange={handleSkiFormChange} placeholder="напр. 100" />
               </div>
 
               <div className="field">
                 <label>Единица жёсткости</label>
-                <input name="stiffnessLabel" value={skiForm.stiffnessLabel} onChange={handleSkiFormChange} placeholder="FA, MF, flex" />
+                <input name="stiffnessLabel" value={skiForm.stiffnessLabel} onChange={handleSkiFormChange} placeholder="FA / MF / flex" />
               </div>
 
               <div className="field">
                 <label>HBW / hr (мм)</label>
-                <input name="camberHeightMm" type="number" step="0.01" value={skiForm.camberHeightMm} onChange={handleSkiFormChange} placeholder="2.6" />
+                <input name="camberHeightMm" type="number" step="0.01" value={skiForm.camberHeightMm} onChange={handleSkiFormChange} placeholder="напр. 2.6" />
               </div>
 
 
@@ -647,7 +647,7 @@ const saveSki = async () => {
     name="stoneGrindName"
     value={skiForm.stoneGrindName}
     onChange={handleSkiFormChange}
-    placeholder="P5-1, SL1, X3LS..."
+    placeholder="напр. P5-1, SL1, X3LS..."
     list="stoneGrindSuggestions"
   />
   <datalist id="stoneGrindSuggestions">
@@ -697,12 +697,12 @@ const saveSki = async () => {
       <div className="modal-grid">
         <div className="field">
           <label>Название *</label>
-          <input name="name" value={waxForm.name} onChange={handleWaxFormChange} placeholder="LF Mid 0/-5" />
+          <input name="name" value={waxForm.name} onChange={handleWaxFormChange} placeholder="напр. LF Mid 0/-5" />
         </div>
 
         <div className="field">
           <label>Бренд *</label>
-          <input name="brand" value={waxForm.brand} onChange={handleWaxFormChange} placeholder="Vauhti" />
+          <input name="brand" value={waxForm.brand} onChange={handleWaxFormChange} placeholder="напр. Vauhti" />
         </div>
 
         <div className="field">
@@ -725,22 +725,22 @@ const saveSki = async () => {
 
         <div className="field">
           <label>Температура min (°C)</label>
-          <input name="tempMin" type="number" step="0.1" value={waxForm.tempMin} onChange={handleWaxFormChange} placeholder="-25" />
+          <input name="tempMin" type="number" step="0.1" value={waxForm.tempMin} onChange={handleWaxFormChange} placeholder="напр. -25" />
         </div>
 
         <div className="field">
           <label>Температура max (°C)</label>
-          <input name="tempMax" type="number" step="0.1" value={waxForm.tempMax} onChange={handleWaxFormChange} placeholder="-1" />
+          <input name="tempMax" type="number" step="0.1" value={waxForm.tempMax} onChange={handleWaxFormChange} placeholder="напр. -1" />
         </div>
 
         <div className="field">
           <label>Влажность min (%)</label>
-          <input name="humidityMin" type="number" step="1" value={waxForm.humidityMin} onChange={handleWaxFormChange} placeholder="60" />
+          <input name="humidityMin" type="number" step="1" value={waxForm.humidityMin} onChange={handleWaxFormChange} placeholder="напр. 60" />
         </div>
 
         <div className="field">
           <label>Влажность max (%)</label>
-          <input name="humidityMax" type="number" step="1" value={waxForm.humidityMax} onChange={handleWaxFormChange} placeholder="100" />
+          <input name="humidityMax" type="number" step="1" value={waxForm.humidityMax} onChange={handleWaxFormChange} placeholder="напр. 100" />
         </div>
 
         <div className="field">
