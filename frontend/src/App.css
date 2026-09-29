@@ -473,3 +473,117 @@ textarea {
   background: #ffffff;
   color: #1a2a3a;
 }
+/* ========== Мобильная адаптация ========== */
+@media (max-width: 640px) {
+
+  .container {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  /* Табы — компактные */
+  .tabs {
+    padding: 4px;
+    gap: 4px;
+  }
+  .tab-btn {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  /* Карточки */
+  .card {
+    padding: 15px 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* Формы — поля в столбик */
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .form-row label {
+    min-width: auto;
+    font-size: 13px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Инфо-сетка результата */
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  /* Карточки лыж */
+  .ski-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .ski-name {
+    font-size: 14px;
+  }
+  .ski-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .ski-details {
+    font-size: 12px;
+  }
+
+  /* Карточки мазей */
+  .wax-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .wax-temp {
+    font-size: 12px;
+  }
+
+  /* Кнопки оценок — в 2 ряда */
+  .rating-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  /* Модалки — почти на весь экран */
+  .modal-box {
+    padding: 18px 20px;
+    border-radius: 12px;
+    max-height: 95vh;
+  }
+  .modal-wide {
+    max-width: 100%;
+  }
+  .modal-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .field-wide {
+    grid-column: span 1;
+  }
+
+  /* Заголовок арсенала */
+  .arsenal-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .arsenal-actions {
+    justify-content: space-between;
+  }
+}
