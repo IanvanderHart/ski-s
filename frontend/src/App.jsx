@@ -16,6 +16,14 @@ const TYPE_RU = {
   'Universal': 'Универсальная'
 };
 
+const formatTempRange = (a, b) => {
+  if (a == null || b == null) return '';
+  const maxVal = Math.max(a, b);
+  const minVal = Math.min(a, b);
+  return `${maxVal}…${minVal}`;
+};
+
+
 function App() {
   const [activeTab, setActiveTab] = useState('selection');
   const [form, setForm] = useState({
@@ -509,7 +517,7 @@ const saveSki = async () => {
 {(s.stoneGrind || s.stoneGrindName) && (
   <div className="ski-grind">
     <b>Штайншлифт:</b> {s.stoneGrind?.name || s.stoneGrindName}
-    {s.stoneGrind && ` (${s.stoneGrind.tempMin}…${s.stoneGrind.tempMax}°C, ${s.stoneGrind.trackType})`}
+    {s.stoneGrind && ` (${formatTempRange(s.stoneGrind.tempMin, s.stoneGrind.tempMax)}°C, ${s.stoneGrind.trackType})`}
   </div>
 )}
               
@@ -554,7 +562,7 @@ const saveSki = async () => {
         <button className="btn-edit" onClick={() => openEditWax(w)}>✏️</button>
         <button className="btn-delete-ski" onClick={() => deleteWax(w)}>🗑️</button>
         <span className="wax-temp">
-          {w.tempMin}…{w.tempMax}°C · {w.humidityMin}–{w.humidityMax}%
+          {formatTempRange(w.tempMin,w.tempMax)}°C · {w.humidityMin}–{w.humidityMax}%
         </span>
       </div>
     </div>
@@ -861,7 +869,7 @@ function Results({ data }) {
               {s.stoneGrind && (
                 <div className="ski-grind">
                   <b>Штайншлифт:</b> {s.stoneGrind.name}
-                  {' '}({s.stoneGrind.tempMin}…{s.stoneGrind.tempMax}°C, {s.stoneGrind.trackType})
+                  {' '}({formatTempRange(s.stoneGrind.tempMin, s.stoneGrind.tempMax)}°C, {s.stoneGrind.trackType})
                 </div>
               )}
               {s.personalNotes && <div className="ski-notes">{s.personalNotes}</div>}
@@ -919,7 +927,7 @@ function WaxList({ waxes }) {
           <div className="wax-header">
             <b>{w.name.startsWith(w.brand) ? w.name : `${w.brand} ${w.name}`}</b>
             <span className="wax-temp">
-              {w.tempMin}…{w.tempMax}°C · {w.humidityMin}–{w.humidityMax}%
+              {formatTempRange(w.tempMin,w.tempMax)}°C · {w.humidityMin}–{w.humidityMax}%
             </span>
           </div>
           {w.notes && <div className="wax-notes">{w.notes}</div>}
