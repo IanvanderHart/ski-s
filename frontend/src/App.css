@@ -206,6 +206,10 @@ select:focus, input:focus {
   background: #f8fbff;
   border-radius: 8px;
   border: 1px solid #e0eefa;
+  margin-bottom: 10px;
+}
+.wax-item:last-child {
+margin-bottom: 0;
 }
 .wax-header {
   display: flex;
