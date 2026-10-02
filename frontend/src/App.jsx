@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = 'http://213.165.61.19:8087/api/Selection';
-const SKIS_URL = 'http://213.165.61.19:8087/api/Skis';
-const GRINDS_URL = 'http://213.165.61.19:8087/api/StoneGrinds';
+const API_URL = '/api/Selection';
+const SKIS_URL = '/api/Skis';
+const GRINDS_URL = '/api/StoneGrinds';
 const CATEGORY_RU = {
   'Glide': 'Скольжение',
   'Powder': 'Порошок',
@@ -89,7 +89,7 @@ function App() {
   setWaxesLoading(true);
   setWaxesError('');
   try {
-    const res = await axios.get('http://213.165.61.19:8087/api/Waxes');
+    const res = await axios.get('/api/Waxes');
     setWaxes(res.data);
   } catch (err) {
     setWaxesError(err.response?.data?.error || err.message);
@@ -236,7 +236,7 @@ const saveWax = async () => {
       warnings: waxForm.warnings || null
     };
 
-    const url = 'http://213.165.61.19:8087/api/Waxes';
+    const url = '/api/Waxes';
     if (editingWaxId) {
       await axios.put(`${url}/${editingWaxId}`, payload);
     } else {
@@ -258,7 +258,7 @@ const deleteWax = async (wax) => {
   const ok = window.confirm(`Удалить мазь "${wax.name}"?`);
   if (!ok) return;
   try {
-    await axios.delete(`http://213.165.61.19:8087/api/Waxes/${wax.id}`);
+    await axios.delete(`/api/Waxes/${wax.id}`);
     await loadWaxes();
   } catch (err) {
     alert('Ошибка удаления: ' + (err.response?.data?.error || err.message));
