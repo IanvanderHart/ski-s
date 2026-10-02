@@ -29,8 +29,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Обычный HttpClient для Weather API (Open-Meteo, без прокси)
-builder.Services.AddHttpClient("Weather");
+// HttpClient для Weather API — через немецкий прокси (Open-Meteo может блокироваться из РФ)
+builder.Services.AddHttpClient("Weather", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(20);
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    Proxy = new WebProxy("http://132.243.160.111:8888"),
+    UseProxy = true
+});
 
 // HttpClient для Telegram — ходит через немецкий прокси
 builder.Services.AddHttpClient("Telegram", client =>
