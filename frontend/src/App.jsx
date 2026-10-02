@@ -14,7 +14,18 @@ const TYPE_RU = {
   'Base': 'Основа',
   'Finish': 'Финиш',
   'Universal': 'Универсальная'
+  
 };
+
+const SNOW_RU = {
+  'All':'Любой',
+  'FreshDry':'Свежий сухой',
+  'FreshWet':'Свежий влажный',
+  'OldDry':'Старый сухой',
+  'OldWet':'Старый влажный',
+  'Transformed':'Перерождённый'
+};
+
 
 const formatTempRange = (a, b) => {
   if (a == null || b == null) return '';
@@ -570,8 +581,8 @@ const saveSki = async () => {
 <div className="ski-details">
   <span>Категория: {CATEGORY_RU[w.category] || w.category}</span>
   <span>Тип: {TYPE_RU[w.type] || w.type}</span>
-  <span>Снег: {w.snowType}</span>
-  <span>Трасса: {w.trackType}</span>
+  <span>Снег: {SNOW_RU[w.snowType] || w.snowType}</span>
+  <span>Трасса: {SNOW_RU[w.trackType] || w.trackType}</span>
 </div>
   
         {w.notes && <div className="wax-notes">{w.notes}</div>}
@@ -820,8 +831,8 @@ function Results({ data }) {
           <div><b>Эфф. влажность:</b> {input.effectiveHumidity}%</div>
           {input.windSpeed != null && <div><b>Ветер:</b> {input.windSpeed} м/с</div>}
           <div><b>Солнце:</b> {input.isSunny ? 'да' : 'нет'}</div>
-          <div><b>Снег:</b> {input.snowType}</div>
-          <div><b>Трасса:</b> {input.trackType}</div>
+          <div><b>Снег:</b> {SNOW_RU[input.snowType] || input.snowType}</div>
+          <div><b>Трасса:</b> {SNOW_RU[input.trackType] || input.snowType}</div>
           <div><b>Стиль:</b> {input.style === 'Classic' ? 'Классика' : 'Конёк'}</div>
         </div>
 
@@ -869,7 +880,7 @@ function Results({ data }) {
               {s.stoneGrind && (
                 <div className="ski-grind">
                   <b>Штайншлифт:</b> {s.stoneGrind.name}
-                  {' '}({formatTempRange(s.stoneGrind.tempMin, s.stoneGrind.tempMax)}°C, {s.stoneGrind.trackType})
+                  {' '}({formatTempRange(s.stoneGrind.tempMin, s.stoneGrind.tempMax)}°C, {TRACK_RU[s.stoneGrind.trackType] || s.stoneGrind.trackType})
                 </div>
               )}
               {s.personalNotes && <div className="ski-notes">{s.personalNotes}</div>}
