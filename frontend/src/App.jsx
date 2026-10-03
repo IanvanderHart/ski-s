@@ -417,12 +417,14 @@ const saveSki = async () => {
             </div>
 
 <div className="geo-block">
+  <div className="geo-buttons">
   <button type="button" onClick={getLocation}>📍 Моё местоположение</button>
   {form.latitude && (
     <button type="button" className="clear" onClick={clearLocation}>
       ✕ Убрать координаты
     </button>
   )}
+  </div>
   <p className="geo-hint">
     Нажмите — и мы определим погоду для вашего места.
   </p>
