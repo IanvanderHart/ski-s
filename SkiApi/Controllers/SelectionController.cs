@@ -172,7 +172,7 @@ if (showGrip)
         };
 
 
-if (gripOptional)
+/*if (gripOptional)
 {
     notesList.Add("⚡ Все найденные лыжи с камусом — мази держания не требуются.");
 }
@@ -183,7 +183,7 @@ else if (request.Style == "Classic" && skiResults.Any(x => x.Ski.HasSkin))
 else
 {
     notesList.Add("grip — мази держания для классического хода");
-}
+}*/
 
 
         var result = new
