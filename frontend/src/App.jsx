@@ -14,7 +14,6 @@ const TYPE_RU = {
   'Base': 'Основа',
   'Finish': 'Финиш',
   'Universal': 'Универсальная'
-  
 };
 
 const SNOW_RU = {
@@ -26,6 +25,11 @@ const SNOW_RU = {
   'Transformed':'Перерождённый'
 };
 
+const TRACK_RU = {
+  'All':'Любая',
+  'Prepared':'Подготовленная',
+  'Unprepared':'Неподготовленная'
+};
 
 const formatTempRange = (a, b) => {
   if (a == null || b == null) return '';
@@ -517,7 +521,7 @@ const saveSki = async () => {
               
               <div className="ski-details">
                 <span>Ростовка: {s.length} см</span>
-                <span>Эпюра: {s.profile}</span>
+                <span>Конструкция: {s.profile}</span>
                 {s.stiffnessValue && <span>Жёсткость: {s.stiffnessValue} ({s.stiffnessLabel})</span>}
                 {s.camberHeightMm && <span>HBW: {s.camberHeightMm} мм</span>}
                 {s.hasSkin && <span className="skin-badge">Камус-no wax</span>}
@@ -528,7 +532,7 @@ const saveSki = async () => {
 {(s.stoneGrind || s.stoneGrindName) && (
   <div className="ski-grind">
     <b>Штайншлифт:</b> {s.stoneGrind?.name || s.stoneGrindName}
-    {s.stoneGrind && ` (${formatTempRange(s.stoneGrind.tempMin, s.stoneGrind.tempMax)}°C, ${s.stoneGrind.trackType})`}
+    {s.stoneGrind && ` (${formatTempRange(s.stoneGrind.tempMin, s.stoneGrind.tempMax)}°C, ${TRACK_RU[s.stoneGrind.trackType] || s.stoneGrind.trackType})`}
   </div>
 )}
               
@@ -582,7 +586,7 @@ const saveSki = async () => {
   <span>Категория: {CATEGORY_RU[w.category] || w.category}</span>
   <span>Тип: {TYPE_RU[w.type] || w.type}</span>
   <span>Снег: {SNOW_RU[w.snowType] || w.snowType}</span>
-  <span>Трасса: {SNOW_RU[w.trackType] || w.trackType}</span>
+  <span>Трасса: {TRACK_RU[w.trackType] || w.trackType}</span>
 </div>
   
         {w.notes && <div className="wax-notes">{w.notes}</div>}
@@ -832,7 +836,7 @@ function Results({ data }) {
           {input.windSpeed != null && <div><b>Ветер:</b> {input.windSpeed} м/с</div>}
           <div><b>Солнце:</b> {input.isSunny ? 'да' : 'нет'}</div>
           <div><b>Снег:</b> {SNOW_RU[input.snowType] || input.snowType}</div>
-          <div><b>Трасса:</b> {SNOW_RU[input.trackType] || input.snowType}</div>
+          <div><b>Трасса:</b> {TRACK_RU[input.trackType] || input.snowType}</div>
           <div><b>Стиль:</b> {input.style === 'Classic' ? 'Классика' : 'Конёк'}</div>
         </div>
 
