@@ -17,7 +17,6 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // SkiGrindHistory: два FK на разные таблицы — явно указываем поведение
-        modelBuilder.Entity<Wax>().Ignore(w => w.GetType().GetProperty("SnowType"));
         modelBuilder.Entity<SkiGrindHistory>()
             .HasOne(h => h.Ski)
             .WithMany()
