@@ -50,7 +50,9 @@ function App() {
     isSunny: false,
     snowType: 'All',
     trackType: 'All',
-    style: 'Classic'
+    style: 'Classic',
+    dayOffset: 0,
+    hour: new Date().getHours()
   });
 
   const [result, setResult] = useState(null);
@@ -337,6 +339,8 @@ const saveSki = async () => {
       if (form.latitude && form.longitude) {
         payload.latitude = form.latitude;
         payload.longitude = form.longitude;
+        payload.dayOffset = form.dayOffset;
+        payload.hour = form.hour;
       }
       if (form.airTemp !== '') payload.airTemp = parseFloat(form.airTemp);
       if (form.humidity !== '') payload.humidity = parseFloat(form.humidity);
@@ -424,6 +428,45 @@ const saveSki = async () => {
   </p>
   {geoStatus && <div className="geo-status">{geoStatus}</div>}
 </div>
+{form.latitude && (
+  <div className="time-picker">
+    <div className="day-toggle">
+      <button
+        type="button"
+        className={`day-btn ${form.dayOffset === 0 ? 'active' : ''}`}
+        onClick={() => setForm(f => ({ ...f, dayOffset: 0 }))}
+      >
+        Сегодня
+      </button>
+      <button
+        type="button"
+        className={`day-btn ${form.dayOffset === 1 ? 'active' : ''}`}
+        onClick={() => setForm(f => ({ ...f, dayOffset: 1 }))}
+      >
+        Завтра
+      </button>
+    </div>
+
+    <label className="hour-slider-label">
+      Время: <b>{String(form.hour).padStart(2, '0')}:00</b>
+    </label>
+    <input
+      type="range"
+      min="0"
+      max="23"
+      value={form.hour}
+      onChange={(e) => setForm(f => ({ ...f, hour: parseInt(e.target.value) }))}
+      className="hour-slider"
+    />
+    <div className="hour-marks">
+      <span>00</span>
+      <span>06</span>
+      <span>12</span>
+      <span>18</span>
+      <span>23</span>
+    </div>
+  </div>
+)}
 
             <p className="hint">
               Если координаты заданы — погода подтянется автоматически.

@@ -29,19 +29,25 @@ public class SelectionController : ControllerBase
 
         // 0. Погода из API (если есть координаты)
         bool weatherFromApi = false;
-        if (request.Latitude.HasValue && request.Longitude.HasValue)
-        {
-            var weather = await _weather.GetWeatherAsync(request.Latitude.Value, request.Longitude.Value);
-            if (weather != null)
-            {
-                request.AirTemp ??= weather.AirTemp;
-                request.Humidity ??= weather.Humidity;
-                request.WindSpeed ??= weather.WindSpeed;
-                request.IsSunny ??= weather.IsSunny;
-                weatherFromApi = true;
-            }
-        }
 
+if (request.Latitude.HasValue && request.Longitude.HasValue)
+{
+    var weather = await _weather.GetWeatherAsync(
+        request.Latitude.Value,
+        request.Longitude.Value,
+        request.DayOffset ?? 0,
+        request.Hour
+    );
+    if (weather != null)
+    {
+        request.AirTemp ??= weather.AirTemp;
+        request.Humidity ??= weather.Humidity;
+        request.WindSpeed ??= weather.WindSpeed;
+        request.IsSunny ??= weather.IsSunny;
+        weatherFromApi = true;
+    }
+}
+        
         if (!request.AirTemp.HasValue || !request.Humidity.HasValue)
             return BadRequest("Не удалось определить температуру и влажность.");
 
@@ -332,6 +338,8 @@ public class SelectionRequest
     public string TrackType { get; set; } = "All";
     public string Style { get; set; } = "Classic";
     public string? DeviceHash { get; set; }
+    public int? DayOffset { get; set; }
+    public int? Hour { get; set; }
 }
 
 public class RatingRequest
