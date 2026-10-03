@@ -413,17 +413,21 @@ const saveSki = async () => {
               </select>
             </div>
 
-            <div className="form-row">
-              <label>Тип снега:</label>
-              <select name="snowType" value={form.snowType} onChange={handleChange}>
-                <option value="All">Любой</option>
-                <option value="FreshDry">Свежий сухой</option>
-                <option value="FreshWet">Свежий влажный</option>
-                <option value="OldDry">Старый сухой</option>
-                <option value="OldWet">Старый влажный</option>
-                <option value="Transformed">Перерождённый</option>
-              </select>
-            </div>
+
+<div className="form-row">
+  <label>Тип снега:</label>
+  <select name="snowType" value={form.snowType} onChange={handleChange}>
+    <option value="All">Любой</option>
+    <option value="FreshDry">Свежий сухой</option>
+    <option value="FreshWet">Свежий влажный</option>
+    <option value="OldDry">Старый сухой</option>
+    <option value="OldWet">Старый влажный</option>
+    <option value="TransformedDry">Перерождённый сухой</option>
+    <option value="TransformedWet">Перерождённый влажный</option>
+    <option value="IceDry">Гололёд сухой</option>
+    <option value="IceWet">Гололёд влажный</option>
+  </select>
+</div>
 
             <div className="form-row">
               <label>Трасса:</label>
