@@ -569,7 +569,7 @@ const saveSki = async () => {
                 <span>Конструкция: {s.profile}</span>
                 {s.stiffnessValue && <span>Жёсткость: {s.stiffnessValue} ({s.stiffnessLabel})</span>}
                 {s.camberHeightMm && <span>HBW: {s.camberHeightMm} мм</span>}
-                {s.hasSkin && <span className="skin-badge">Камус-no wax</span>}
+                {s.hasSkin && <span className="skin-badge">Камус - no wax</span>}
               </div>
 
 
@@ -730,7 +730,7 @@ const saveSki = async () => {
               <div className="field checkbox-field">
                 <label>
                   <input name="hasSkin" type="checkbox" checked={skiForm.hasSkin} onChange={handleSkiFormChange} />
-                  {' '}Камус (intelligrip)
+                  {' '}Камус - no wax (intelligrip)
                 </label>
               </div>
 
@@ -924,7 +924,7 @@ function Results({ data }) {
                 <span>Эпюра: {s.profile}</span>
                 {s.stiffnessValue && <span>Жёсткость: {s.stiffnessValue} ({s.stiffnessLabel})</span>}
                 {s.camberHeightMm && <span>HBW: {s.camberHeightMm} мм</span>}
-                {s.hasSkin && <span className="skin-badge">🧷 Камус</span>}
+                {s.hasSkin && <span className="skin-badge">Камус - no wax</span>}
               </div>
               {s.stoneGrind && (
                 <div className="ski-grind">
