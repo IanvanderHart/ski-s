@@ -57,7 +57,16 @@ public class WaxesController : ControllerBase
         existing.TempMax = wax.TempMax;
         existing.HumidityMin = wax.HumidityMin;
         existing.HumidityMax = wax.HumidityMax;
-        existing.SnowType = wax.SnowType;
+        
+existing.FreshDry = wax.FreshDry;
+existing.FreshWet = wax.FreshWet;
+existing.OldDry = wax.OldDry;
+existing.OldWet = wax.OldWet;
+existing.TransformedDry = wax.TransformedDry;
+existing.TransformedWet = wax.TransformedWet;
+existing.IceDry = wax.IceDry;
+existing.IceWet = wax.IceWet;
+
         existing.TrackType = wax.TrackType;
         existing.Notes = wax.Notes;
 

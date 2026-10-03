@@ -17,12 +17,15 @@ const TYPE_RU = {
 };
 
 const SNOW_RU = {
-  'All':'Любой',
-  'FreshDry':'Свежий сухой',
-  'FreshWet':'Свежий влажный',
-  'OldDry':'Старый сухой',
-  'OldWet':'Старый влажный',
-  'Transformed':'Перерождённый'
+  'All': 'Любой',
+  'FreshDry': 'Свежий сухой',
+  'FreshWet': 'Свежий влажный',
+  'OldDry': 'Старый сухой',
+  'OldWet': 'Старый влажный',
+  'TransformedDry': 'Перерождённый сухой',
+  'TransformedWet': 'Перерождённый влажный',
+  'IceDry': 'Гололёд сухой',
+  'IceWet': 'Гололёд влажный'
 };
 
 const TRACK_RU = {
@@ -205,8 +208,8 @@ const deleteSki = async (ski) => {
 };
 
 const handleWaxFormChange = (e) => {
-  const { name, value } = e.target;
-  setWaxForm((f) => ({ ...f, [name]: value }));
+  const { name, value, type, checked } = e.target;
+  setWaxForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
 };
 
 const resetWaxForm = () => {
@@ -225,7 +228,14 @@ const openEditWax = (wax) => {
     tempMax: wax.tempMax ?? '',
     humidityMin: wax.humidityMin ?? '',
     humidityMax: wax.humidityMax ?? '',
-    snowType: wax.snowType || 'All',
+    freshDry: wax.freshDry || false,
+    freshWet: wax.freshWet || false,
+    oldDry: wax.oldDry || false,
+    oldWet: wax.oldWet || false,
+    transformedDry: wax.transformedDry || false,
+    transformedWet: wax.transformedWet || false,
+    iceDry: wax.iceDry || false,
+    iceWet: wax.iceWet || false,
     trackType: wax.trackType || 'All',
     notes: wax.notes || '',
     warnings: wax.warnings || ''
@@ -238,20 +248,28 @@ const saveWax = async () => {
   setWaxSaving(true);
   setWaxFormError('');
   try {
-    const payload = {
-      name: waxForm.name,
-      brand: waxForm.brand,
-      category: waxForm.category,
-      type: waxForm.type,
-      tempMin: waxForm.tempMin !== '' ? parseFloat(waxForm.tempMin) : 0,
-      tempMax: waxForm.tempMax !== '' ? parseFloat(waxForm.tempMax) : 0,
-      humidityMin: waxForm.humidityMin !== '' ? parseFloat(waxForm.humidityMin) : 0,
-      humidityMax: waxForm.humidityMax !== '' ? parseFloat(waxForm.humidityMax) : 100,
-      snowType: waxForm.snowType,
-      trackType: waxForm.trackType,
-      notes: waxForm.notes || null,
-      warnings: waxForm.warnings || null
-    };
+
+const payload = {
+  name: waxForm.name,
+  brand: waxForm.brand,
+  category: waxForm.category,
+  type: waxForm.type,
+  tempMin: waxForm.tempMin !== '' ? parseFloat(waxForm.tempMin) : 0,
+  tempMax: waxForm.tempMax !== '' ? parseFloat(waxForm.tempMax) : 0,
+  humidityMin: waxForm.humidityMin !== '' ? parseFloat(waxForm.humidityMin) : 0,
+  humidityMax: waxForm.humidityMax !== '' ? parseFloat(waxForm.humidityMax) : 100,
+  freshDry: waxForm.freshDry,
+  freshWet: waxForm.freshWet,
+  oldDry: waxForm.oldDry,
+  oldWet: waxForm.oldWet,
+  transformedDry: waxForm.transformedDry,
+  transformedWet: waxForm.transformedWet,
+  iceDry: waxForm.iceDry,
+  iceWet: waxForm.iceWet,
+  trackType: waxForm.trackType,
+  notes: waxForm.notes || null,
+  warnings: waxForm.warnings || null
+};
 
     const url = '/api/Waxes';
     if (editingWaxId) {
@@ -630,9 +648,20 @@ const saveSki = async () => {
 <div className="ski-details">
   <span>Категория: {CATEGORY_RU[w.category] || w.category}</span>
   <span>Тип: {TYPE_RU[w.type] || w.type}</span>
-  <span>Снег: {SNOW_RU[w.snowType] || w.snowType}</span>
+  <span>
+    Снег: {[
+      w.freshDry && 'Свежий сухой',
+      w.freshWet && 'Свежий влажный',
+      w.oldDry && 'Старый сухой',
+      w.oldWet && 'Старый влажный',
+      w.transformedDry && 'Перерождённый сухой',
+      w.transformedWet && 'Перерождённый влажный',
+      w.iceDry && 'Гололёд сухой',
+      w.iceWet && 'Гололёд влажный'
+    ].filter(Boolean).join(', ') || '—'}
+  </span>
   <span>Трасса: {TRACK_RU[w.trackType] || w.trackType}</span>
-</div>
+ </div>
   
         {w.notes && <div className="wax-notes">{w.notes}</div>}
         {w.warnings && <div className="wax-warn">⚠️ {w.warnings}</div>}
@@ -811,17 +840,43 @@ const saveSki = async () => {
           <input name="humidityMax" type="number" step="1" value={waxForm.humidityMax} onChange={handleWaxFormChange} placeholder="напр. 100" />
         </div>
 
-        <div className="field">
-          <label>Тип снега</label>
-          <select name="snowType" value={waxForm.snowType} onChange={handleWaxFormChange}>
-            <option value="All">Любой</option>
-            <option value="FreshDry">Свежий сухой</option>
-            <option value="FreshWet">Свежий влажный</option>
-            <option value="OldDry">Старый сухой</option>
-            <option value="OldWet">Старый влажный</option>
-            <option value="Transformed">Перерождённый</option>
-          </select>
-        </div>
+<div className="field field-wide">
+  <label>Тип снега (можно выбрать несколько)</label>
+  <div className="snow-checkboxes">
+    <label className="snow-checkbox">
+      <input type="checkbox" name="freshDry" checked={waxForm.freshDry} onChange={handleWaxFormChange} />
+      {' '}Свежий сухой
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="freshWet" checked={waxForm.freshWet} onChange={handleWaxFormChange} />
+      {' '}Свежий влажный
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="oldDry" checked={waxForm.oldDry} onChange={handleWaxFormChange} />
+      {' '}Старый сухой
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="oldWet" checked={waxForm.oldWet} onChange={handleWaxFormChange} />
+      {' '}Старый влажный
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="transformedDry" checked={waxForm.transformedDry} onChange={handleWaxFormChange} />
+      {' '}Перерождённый сухой
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="transformedWet" checked={waxForm.transformedWet} onChange={handleWaxFormChange} />
+      {' '}Перерождённый влажный
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="iceDry" checked={waxForm.iceDry} onChange={handleWaxFormChange} />
+      {' '}Гололёд сухой
+    </label>
+    <label className="snow-checkbox">
+      <input type="checkbox" name="iceWet" checked={waxForm.iceWet} onChange={handleWaxFormChange} />
+      {' '}Гололёд влажный
+    </label>
+  </div>
+</div>
 
         <div className="field">
           <label>Тип трассы</label>
@@ -918,6 +973,7 @@ function Results({ data }) {
                   {s.matchScore}
                 </span>
               </div>
+              
               <div className="ski-details">
                 <span>Стиль: {s.style}</span>
                 <span>Ростовка: {s.length} см</span>
@@ -1098,7 +1154,14 @@ function getEmptyWaxForm() {
     tempMax: '',
     humidityMin: '',
     humidityMax: '',
-    snowType: 'All',
+    freshDry: false,
+    freshWet: false,
+    oldDry: false,
+    oldWet: false,
+    transformedDry: false,
+    transformedWet: false,
+    iceDry: false,
+    iceWet: false,
     trackType: 'All',
     notes: '',
     warnings: ''

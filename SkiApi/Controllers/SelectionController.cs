@@ -99,13 +99,49 @@ if (showGrip)
 
         var allWaxes = await _context.Waxes.Where(w => categories.Contains(w.Category)).ToListAsync();
 
-        bool Matches(Wax w) =>
-            airTemp >= Math.Min(w.TempMin, w.TempMax) &&
-            airTemp <= Math.Max(w.TempMin, w.TempMax) &&
-            effectiveHumidity >= w.HumidityMin &&
-            effectiveHumidity <= w.HumidityMax &&
-            (w.SnowType == "All" || w.SnowType == request.SnowType) &&
-            (w.TrackType == "All" || w.TrackType == request.TrackType);
+bool MatchesSnow(Wax w, string snowType)
+{
+    bool isSkating = request.Style == "Free";
+
+    if (isSkating)
+    {
+        // В коньке объединяем Transformed и Ice (по опыту: мажут одинаково)
+        return snowType switch
+        {
+            "FreshDry"       => w.FreshDry,
+            "FreshWet"       => w.FreshWet,
+            "OldDry"         => w.OldDry,
+            "OldWet"         => w.OldWet,
+            "TransformedDry" => w.TransformedDry || w.IceDry,
+            "TransformedWet" => w.TransformedWet || w.IceWet,
+            "IceDry"         => w.IceDry || w.TransformedDry,
+            "IceWet"         => w.IceWet || w.TransformedWet,
+            _                => true
+        };
+    }
+
+    // Классика — точное совпадение
+    return snowType switch
+    {
+        "FreshDry"       => w.FreshDry,
+        "FreshWet"       => w.FreshWet,
+        "OldDry"         => w.OldDry,
+        "OldWet"         => w.OldWet,
+        "TransformedDry" => w.TransformedDry,
+        "TransformedWet" => w.TransformedWet,
+        "IceDry"         => w.IceDry,
+        "IceWet"         => w.IceWet,
+        _                => true
+    };
+}
+
+bool Matches(Wax w) =>
+    airTemp >= Math.Min(w.TempMin, w.TempMax) &&
+    airTemp <= Math.Max(w.TempMin, w.TempMax) &&
+    effectiveHumidity >= w.HumidityMin &&
+    effectiveHumidity <= w.HumidityMax &&
+    MatchesSnow(w, request.SnowType) &&
+    (w.TrackType == "All" || w.TrackType == request.TrackType);
 
         var matched = allWaxes.Where(Matches).ToList();
 
@@ -137,11 +173,13 @@ if (showGrip)
         await _context.SaveChangesAsync();
 
         // 6. Формирование ответа
-        object ToDto(Wax w) => new
-        {
-            w.Id, w.Name, w.Brand, w.Category, w.Type,
-            w.TempMin, w.TempMax, w.HumidityMin, w.HumidityMax, w.Notes, w.Warnings
-        };
+object ToDto(Wax w) => new
+{
+    w.Id, w.Name, w.Brand, w.Category, w.Type,
+    w.TempMin, w.TempMax, w.HumidityMin, w.HumidityMax, w.Notes, w.Warnings,
+    w.FreshDry, w.FreshWet, w.OldDry, w.OldWet,
+    w.TransformedDry, w.TransformedWet, w.IceDry, w.IceWet
+};
 
         object SkiToDto(dynamic x) => new
         {

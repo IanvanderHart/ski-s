@@ -11,7 +11,17 @@ public class Wax
     public double TempMax { get; set; }
     public double HumidityMin { get; set; }
     public double HumidityMax { get; set; }
-    public string SnowType { get; set; } = string.Empty; // FreshDry / FreshWet / OldDry / OldWet / Transformed / All
+
+// Типы снега (8 boolean-колонок)
+public bool FreshDry { get; set; }
+public bool FreshWet { get; set; }
+public bool OldDry { get; set; }
+public bool OldWet { get; set; }
+public bool TransformedDry { get; set; }
+public bool TransformedWet { get; set; }
+public bool IceDry { get; set; }
+public bool IceWet { get; set; }
+
     public string TrackType { get; set; } = string.Empty; // Prepared / Unprepared / All
     public string? Notes { get; set; }
     public string? Warnings {get; set; }

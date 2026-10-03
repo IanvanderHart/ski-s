@@ -549,6 +549,25 @@ margin-bottom: 0;
   margin-top: 6px;
   padding: 0 2px;
 }
+.snow-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 6px;
+}
+.snow-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #29425a;
+  cursor: pointer;
+  user-select: none;
+}
+.snow-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
 
 .wax-temp { color: #4a6a85; font-size: 13px; }
 .wax-notes { font-size: 12px; color: #6a8199; margin-top: 4px; }
